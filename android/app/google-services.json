@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "911263916570",
+    "project_id": "customer-astroremedys",
+    "storage_bucket": "customer-astroremedys.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911263916570:android:c1cda3797d1ad1d62727a3",
+        "android_client_info": {
+          "package_name": "com.astroremedys.customer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJvthRO-7SU9enYCFu21hJ9_hfZwJVesA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
