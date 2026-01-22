@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:AstrowayCustomer/utils/global.dart' as global;
 import 'package:AstrowayCustomer/widget/commonCachedNetworkImage.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:AstrowayCustomer/utils/global.dart' as global;
+
 import '../../../controllers/bottomNavigationController.dart';
 import '../../../controllers/callController.dart';
 import '../../../controllers/reviewController.dart';
@@ -418,7 +419,7 @@ class _Astrologercallscreenlisting extends State<Astrologercallscreenlisting> {
                                                 .isFreeAvailable ==
                                             true
                                         ? Text(
-                                            'FREE',
+                                            'FREE1',
                                             style: Get
                                                 .theme.textTheme.titleMedium!
                                                 .copyWith(
@@ -614,15 +615,19 @@ class _Astrologercallscreenlisting extends State<Astrologercallscreenlisting> {
                                     Expanded(
                                       child: GestureDetector(
                                         onTap: () async {
-                                          bool isLogin = await global.isLogin();
-                                          _logedIn(
-                                            context,
-                                            isLogin,
-                                            index,
-                                            true,
-                                            widget.astrologerList[index].charge,
-                                          );
+                                          await global.apiHelper
+                                              .startAgoraCall(context);
                                         },
+                                        // () async {
+                                        //   bool isLogin = await global.isLogin();
+                                        //   _logedIn(
+                                        //     context,
+                                        //     isLogin,
+                                        //     index,
+                                        //     true,
+                                        //     widget.astrologerList[index].charge,
+                                        //   );
+                                        // },
                                         child: Container(
                                           height: 35,
                                           alignment: Alignment.center,
@@ -684,7 +689,7 @@ class _Astrologercallscreenlisting extends State<Astrologercallscreenlisting> {
                                                 widget.astrologerList[index]
                                                             .isFreeAvailable ==
                                                         true
-                                                    ? "FREE"
+                                                    ? "FREE2"
                                                     : "Call",
                                                 style: TextStyle(
                                                     fontSize: 15.sp,
@@ -771,7 +776,7 @@ class _Astrologercallscreenlisting extends State<Astrologercallscreenlisting> {
                                                 widget.astrologerList[index]
                                                             .isFreeAvailable ==
                                                         true
-                                                    ? "FREE"
+                                                    ? "FREE3"
                                                     : "Video",
                                                 style: TextStyle(
                                                     fontSize: 15.sp,

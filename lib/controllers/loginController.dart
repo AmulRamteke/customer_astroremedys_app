@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+
 import 'package:AstrowayCustomer/controllers/bottomNavigationController.dart';
 import 'package:AstrowayCustomer/controllers/homeController.dart';
 import 'package:AstrowayCustomer/controllers/splashController.dart';
 import 'package:AstrowayCustomer/model/login_model.dart';
+import 'package:AstrowayCustomer/utils/global.dart' as global;
 import 'package:AstrowayCustomer/utils/services/api_helper.dart';
 import 'package:AstrowayCustomer/views/loginScreen.dart';
-import 'package:AstrowayCustomer/views/onboard/FreeChatOnBoardScreen.dart';
 import 'package:AstrowayCustomer/views/verifyPhoneScreen.dart'
     show VerifyPhoneScreen;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,9 +16,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+
 import '../model/device_info_login_model.dart';
 import '../views/bottomNavigationBarScreen.dart';
-import 'package:AstrowayCustomer/utils/global.dart' as global;
 
 class LoginController extends GetxController {
   late TextEditingController phoneController;
@@ -245,7 +246,7 @@ class LoginController extends GetxController {
           debugPrint("free chat value $isFreeChat");
           Get.find<BottomNavigationController>().setIndex(0, 0);
           Get.off(() => BottomNavigationBarScreen(index: 0));
-                    // if (isFreeChat) {
+          // if (isFreeChat) {
           //   Get.offAll(
           //     () => FreeChatOnBoardscreen(),
           //     transition: Transition.rightToLeft,
@@ -265,26 +266,50 @@ class LoginController extends GetxController {
     }
   }
 
+  // Future<UserCredential> signInWithGoogle() async {
+  //   global.showOnlyLoaderDialog(Get.context);
+  //   // Create GoogleSignIn instance
+  //   final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  //   // Force sign out to show the account picker every time
+  //   await googleSignIn.signOut();
+
+  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  //   if (googleUser == null) throw Exception('Sign-in cancelled by user.');
+
+  //   final GoogleSignInAuthentication googleAuth =
+  //       await googleUser.authentication;
+
+  //   final credential = GoogleAuthProvider.credential(
+  //     accessToken: googleAuth.accessToken,
+  //     idToken: googleAuth.idToken,
+  //   );
+  //   global.hideLoader();
+
+  //   return await FirebaseAuth.instance.signInWithCredential(credential);
+  // }
+
   Future<UserCredential> signInWithGoogle() async {
-    global.showOnlyLoaderDialog(Get.context);
-    // Create GoogleSignIn instance
-    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      scopes: ['email'],
+    );
+    print("google googleSignIn user ${googleSignIn}");
+    // await googleSignIn.signOut();
 
-    // Force sign out to show the account picker every time
-    await googleSignIn.signOut();
-
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    if (googleUser == null) throw Exception('Sign-in cancelled by user.');
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    print("google signin user ${googleUser}");
+    if (googleUser == null) {
+      throw Exception('Google sign-in cancelled');
+    }
 
     final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-
+        await googleUser!.authentication;
+    print("google auth ${googleAuth}");
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    global.hideLoader();
 
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }

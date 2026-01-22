@@ -43,6 +43,7 @@ import 'package:AstrowayCustomer/model/viewStories.dart';
 import 'package:AstrowayCustomer/model/wait_list_model.dart';
 import 'package:AstrowayCustomer/utils/global.dart' as global;
 import 'package:AstrowayCustomer/utils/services/api_result.dart';
+import 'package:AstrowayCustomer/views/call/agoraCall/agoraOutgoingCallScreen.dart';
 import 'package:AstrowayCustomer/views/chatwithAI/models/aichatingchargemodel.dart';
 import 'package:AstrowayCustomer/views/chatwithAI/models/messageResponseModel.dart';
 import 'package:AstrowayCustomer/views/poojaBooking/model/poojalistmodel.dart';
@@ -748,6 +749,7 @@ class APIHelper {
         Uri.parse("$baseUrl/getCustomerHome"),
       );
       dynamic recordList;
+      print("getCustomerHome banner response ${response.body}");
       if (response.statusCode == 200) {
         recordList = List<Banners>.from(json
             .decode(response.body)["banner"]
@@ -755,6 +757,7 @@ class APIHelper {
       } else {
         recordList = null;
       }
+
       return getAPIResult(response, recordList);
     } catch (e) {
       debugPrint('Exception in getHomeBanner():' + e.toString());
@@ -785,12 +788,16 @@ class APIHelper {
   Future<dynamic> getHomeBlog() async {
     try {
       final response = await http.post(
-        Uri.parse("$baseUrl/getCustomerHome"),
+        Uri.parse("$baseUrl/getBlog"),
       );
       dynamic recordList;
+      print("responnse from blog ${response.statusCode}");
+      print("responnse from blog ${response.body}");
+
       if (response.statusCode == 200) {
-        recordList = List<Blog>.from(
-            json.decode(response.body)["blog"].map((x) => Blog.fromJson(x)));
+        recordList = List<Blog>.from(json
+            .decode(response.body)["recordList"]
+            .map((x) => Blog.fromJson(x)));
       } else {
         recordList = null;
       }
@@ -826,6 +833,10 @@ class APIHelper {
     try {
       final response = await http.post(
         Uri.parse("$baseUrl/getAstrologerStory"),
+        // headers: {
+        //   "Authorization":
+        //       "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FzdHJvcmVtZWR5cy5jb20vYXBpL2xvZ2luIiwiaWF0IjoxNzY4NDEzOTk1LCJleHAiOjE3NzEwMDU5OTUsIm5iZiI6MTc2ODQxMzk5NSwianRpIjoiZ1RqdUJMNmRTWGdieEV4QyIsInN1YiI6IjYxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.HrCvaboMRwCvBcnbLtogV1yu_C_Jam8Ey_6nInLn1SU"
+        // },
         headers: await global.getApiHeaders(true),
       );
       print("getAstrologerStory ${response.statusCode}");
@@ -1021,9 +1032,11 @@ class APIHelper {
         recordList = List<AstrologerModel>.from(json
             .decode(response.body)["recordList"]
             .map((x) => AstrologerModel.fromJson(x)));
+        log('getAstrologer recordList ${recordList}');
       } else {
         recordList = null;
       }
+
       return getAPIResult(response, recordList);
     } catch (e) {
       debugPrint('Exception in getAstrologer():' + e.toString());
@@ -1084,6 +1097,7 @@ class APIHelper {
     }
   }
 
+////////////////////////////////////////////////
   Future<dynamic> checkUserAlreadyInChatReq({int? astorlogerId}) async {
     try {
       final response =
@@ -1092,6 +1106,7 @@ class APIHelper {
               body: json.encode({
                 "astrologerId": astorlogerId,
               }));
+
       dynamic recordList;
       if (response.statusCode == 200) {
         recordList = json.decode(response.body)["recordList"];
@@ -1104,6 +1119,7 @@ class APIHelper {
     }
   }
 
+//////////////////////////////////////////
   Future<dynamic> checkUserAlreadyInCallReq({int? astorlogerId}) async {
     try {
       final response =
@@ -1336,7 +1352,7 @@ class APIHelper {
         }),
       );
 
-      // print("getting response${response.body}");
+      // print("getting response astrolmall product. ${response.body}");
       dynamic recordList;
       if (response.statusCode == 200) {
         recordList = List<AstromallProductModel>.from(json
@@ -4200,5 +4216,88 @@ class APIHelper {
     } catch (e) {
       debugPrint('Exception:- in updateMin:- ' + e.toString());
     }
+  }
+
+  Future<void> startAgoraCall(BuildContext context) async {
+    try {
+      // 1️⃣ Create unique channel
+      final callerId = 1; // STATIC
+      final receiverId = 2; // STATIC
+      final channel = "call_test_1";
+
+      // 2️⃣ Generate Agora token
+      final tokenRes = await http.get(
+        Uri.parse("$baseUrl/generate-agora-token?channel=$channel"),
+      );
+      // print("token res body ${tokenRes}");
+      final tokenData = jsonDecode(tokenRes.body);
+      print("Token Data $tokenData");
+
+      // // 3️⃣ CREATE CALL ENTRY IN DB (MOST IMPORTANT STEP YOU MISSED)
+      final callRes = await http.post(
+        Uri.parse("$baseUrl/start-call"),
+        body: {
+          'caller_id': callerId.toString(), // LOGGED IN USER
+          'receiver_id': receiverId.toString(), // ASTROLOGER ID
+          'channel': channel,
+          'token': tokenData['token'].toString(),
+        },
+      );
+
+      final callData = jsonDecode(callRes.body);
+      print("calldata ${callData}");
+      final int callId = int.parse(callData['call_id'].toString());
+
+      // 4️⃣ OPEN OUTGOING CALL SCREEN
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => Agoraoutgoingcallscreen(
+            callId: callId,
+            channel: channel,
+            token: tokenData['token'],
+          ),
+        ),
+      );
+    } catch (e) {
+      debugPrint('Exception:- in updateMin:- ' + e.toString());
+    }
+  }
+
+  Future<String> getCallStatus(int callId) async {
+    final res = await http.get(
+      Uri.parse('$baseUrl/get-call-status/$callId'),
+    );
+    return jsonDecode(res.body)['status'];
+  }
+
+  Future<void> updateCallStatus(int callId, String status) async {
+    final updatedRes = await http.post(
+      Uri.parse('$baseUrl/update-call-status'),
+      body: {
+        'call_id': callId.toString(),
+        'status': status,
+      },
+    );
+    final updatedResData = jsonDecode(updatedRes.body);
+    return updatedResData;
+  }
+
+  Future<Map<String, dynamic>> checkIncomingCall(int userId) async {
+    final res = await http.get(
+      Uri.parse("$baseUrl/check-incoming-call/$userId"),
+    );
+
+    if (res.statusCode != 200) {
+      return {'hasCall': false};
+    }
+
+    if (res.body.isEmpty) {
+      return {'hasCall': false};
+    }
+
+    final decoded = jsonDecode(res.body);
+
+    return decoded is Map<String, dynamic> ? decoded : {'hasCall': false};
   }
 }

@@ -68,8 +68,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   global.sp = await SharedPreferences.getInstance();
   if (global.sp!.getString("currentUser") != null) {
-    await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform);
+    // try {
+    //   await Firebase.initializeApp(
+    //       options: DefaultFirebaseOptions.currentPlatform);
+    // } catch (e) {
+    //   if (!e.toString().contains('already exists')) {
+    //     rethrow;
+    //   }
+    // }
     global.generalPayload = json.encode(message.data['body']);
     var messageData;
     if (message.data['body'] != null) {
@@ -87,7 +93,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   Get.put(DailyHoroscopeController());
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  try {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+  } catch (e) {
+    if (!e.toString().contains('already exists')) {
+      rethrow;
+    }
+  }
+
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   EasyLocalization.logger.enableLevels = []; // 👈 Turn off all logs
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);

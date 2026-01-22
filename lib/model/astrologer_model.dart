@@ -1,6 +1,7 @@
 import 'package:AstrowayCustomer/model/availableTimes_model.dart';
 
 import 'availability_model.dart';
+
 //astro_video : "public/storage/astrologer_videos/astrovideo_1077_1760179842.mp4"
 class AstrologerModel {
   AstrologerModel({
@@ -100,7 +101,7 @@ class AstrologerModel {
   String? degree;
   String? college;
   String? learnAstrology;
-  String? astrologerCategoryId;
+  int? astrologerCategoryId;
   String? instaProfileLink;
   String? facebookProfileLink;
   String? linkedInProfileLink;
@@ -157,8 +158,9 @@ class AstrologerModel {
     email = json["email"] ?? "";
     mobileNo = json["mobileNo"];
     gender = json["gender"] ?? "";
-    birthDate =
-        DateTime.parse(json["birthDate"] ?? DateTime.now().toIso8601String());
+    birthDate = json["birthDate"] != null
+        ? DateTime.parse(json["birthDate"] + "T00:00:00")
+        : DateTime.now();
     chatWaitTime = json["chatWaitTime"] != null
         ? DateTime.parse(
             json["chatWaitTime"] ?? DateTime.now().toIso8601String())
@@ -196,7 +198,7 @@ class AstrologerModel {
     minimumEarning = json["minimumEarning"] ?? 0;
     maximumEarning = json["maximumEarning"] ?? 0;
     loginBio = json["loginBio"] ?? "";
-    noofforeignCountriesTravel = json["NoofforeignCountriesTravel"] ?? "";
+    noofforeignCountriesTravel = (json["NoofforeignCountriesTravel"] ?? "").toString();
     currentlyworkingfulltimejob = json["currentlyworkingfulltimejob"] ?? "";
     goodQuality = json["goodQuality"] ?? "";
     biggestChallenge = json["biggestChallenge"] ?? "";
@@ -236,7 +238,9 @@ class AstrologerModel {
     audio_discounted_rate = json["audio_discounted_rate"];
     chat_discounted_rate = json["chat_discounted_rate"];
     channelName = json["channelName"];
-    pujas= json["pujas"] == null ? [] : List<Puja>.from(json["pujas"]!.map((x) => Puja.fromJson(x)));
+    pujas = json["pujas"] == null
+        ? []
+        : List<Puja>.from(json["pujas"]!.map((x) => Puja.fromJson(x)));
   }
 
   Map<String, dynamic> toJson() => {
@@ -301,12 +305,14 @@ class AstrologerModel {
             ? []
             : List<dynamic>.from(courseBadges!.map((x) => x.toJson())),
         "astrologerCategory": astrologerCategory,
-    "pujas": pujas == null ? [] : List<dynamic>.from(pujas!.map((x) => x.toJson())),
-    "isDiscountedPrice":isDiscountedPrice,
-    "video_discounted_rate":video_discounted_rate,
-    "audio_discounted_rate":audio_discounted_rate,
-    "chat_discounted_rate":chat_discounted_rate,
-    "channelName":channelName,
+        "pujas": pujas == null
+            ? []
+            : List<dynamic>.from(pujas!.map((x) => x.toJson())),
+        "isDiscountedPrice": isDiscountedPrice,
+        "video_discounted_rate": video_discounted_rate,
+        "audio_discounted_rate": audio_discounted_rate,
+        "chat_discounted_rate": chat_discounted_rate,
+        "channelName": channelName,
       };
 }
 
@@ -453,53 +459,66 @@ class Puja {
   });
 
   factory Puja.fromJson(Map<String, dynamic> json) => Puja(
-    id: json["id"],
-    categoryId: json["category_id"],
-    subCategoryId: json["sub_category_id"],
-    pujaTitle: json["puja_title"],
-    slug: json["slug"],
-    pujaSubtitle: json["puja_subtitle"],
-    pujaPlace: json["puja_place"],
-    longDescription: json["long_description"],
-    pujaBenefits: json["puja_benefits"],
-    pujaImages: json["puja_images"] == null ? [] : List<String>.from(json["puja_images"]!.map((x) => x)),  pujaStartDatetime: json["puja_start_datetime"] == null ? null : DateTime.parse(json["puja_start_datetime"]),
-    pujaEndDatetime: json["puja_end_datetime"] == null ? null : DateTime.parse(json["puja_end_datetime"]),
-    pujaDuration: json["puja_duration"],
-    packageId: json["package_id"],
-    pujaStatus: json["puja_status"],
-    astrologerId: json["astrologerId"],
-    pujaPrice: json["puja_price"],
-    isAdminApproved: json["isAdminApproved"],
-    isPujaEnded: json["isPujaEnded"],
-    actualPujaEndtime: json["actual_puja_endtime"],
-    createdBy: json["created_by"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-  );
+        id: json["id"],
+        categoryId: json["category_id"],
+        subCategoryId: json["sub_category_id"],
+        pujaTitle: json["puja_title"],
+        slug: json["slug"],
+        pujaSubtitle: json["puja_subtitle"],
+        pujaPlace: json["puja_place"],
+        longDescription: json["long_description"],
+        pujaBenefits: json["puja_benefits"],
+        pujaImages: json["puja_images"] == null
+            ? []
+            : List<String>.from(json["puja_images"]!.map((x) => x)),
+        pujaStartDatetime: json["puja_start_datetime"] == null
+            ? null
+            : DateTime.parse(json["puja_start_datetime"]),
+        pujaEndDatetime: json["puja_end_datetime"] == null
+            ? null
+            : DateTime.parse(json["puja_end_datetime"]),
+        pujaDuration: json["puja_duration"],
+        packageId: json["package_id"],
+        pujaStatus: json["puja_status"],
+        astrologerId: json["astrologerId"],
+        pujaPrice: json["puja_price"],
+        isAdminApproved: json["isAdminApproved"],
+        isPujaEnded: json["isPujaEnded"],
+        actualPujaEndtime: json["actual_puja_endtime"],
+        createdBy: json["created_by"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "category_id": categoryId,
-    "sub_category_id": subCategoryId,
-    "puja_title": pujaTitle,
-    "slug": slug,
-    "puja_subtitle": pujaSubtitle,
-    "puja_place": pujaPlace,
-    "long_description": longDescription,
-    "puja_benefits": pujaBenefits,
-    "puja_images": pujaImages == null ? [] : List<dynamic>.from(pujaImages!.map((x) => x)),
-    "puja_start_datetime": pujaStartDatetime?.toIso8601String(),
-    "puja_end_datetime": pujaEndDatetime?.toIso8601String(),
-    "puja_duration": pujaDuration,
-    "package_id": packageId,
-    "puja_status": pujaStatus,
-    "astrologerId": astrologerId,
-    "puja_price": pujaPrice,
-    "isAdminApproved": isAdminApproved,
-    "isPujaEnded": isPujaEnded,
-    "actual_puja_endtime": actualPujaEndtime,
-    "created_by": createdBy,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-  };
+        "id": id,
+        "category_id": categoryId,
+        "sub_category_id": subCategoryId,
+        "puja_title": pujaTitle,
+        "slug": slug,
+        "puja_subtitle": pujaSubtitle,
+        "puja_place": pujaPlace,
+        "long_description": longDescription,
+        "puja_benefits": pujaBenefits,
+        "puja_images": pujaImages == null
+            ? []
+            : List<dynamic>.from(pujaImages!.map((x) => x)),
+        "puja_start_datetime": pujaStartDatetime?.toIso8601String(),
+        "puja_end_datetime": pujaEndDatetime?.toIso8601String(),
+        "puja_duration": pujaDuration,
+        "package_id": packageId,
+        "puja_status": pujaStatus,
+        "astrologerId": astrologerId,
+        "puja_price": pujaPrice,
+        "isAdminApproved": isAdminApproved,
+        "isPujaEnded": isPujaEnded,
+        "actual_puja_endtime": actualPujaEndtime,
+        "created_by": createdBy,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+      };
 }

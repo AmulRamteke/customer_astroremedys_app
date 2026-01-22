@@ -1,19 +1,21 @@
 import 'dart:developer';
+
 import 'package:AstrowayCustomer/controllers/bottomNavigationController.dart';
 import 'package:AstrowayCustomer/controllers/splashController.dart';
 import 'package:AstrowayCustomer/model/Allstories.dart';
 import 'package:AstrowayCustomer/model/app_review_model.dart';
 import 'package:AstrowayCustomer/model/home_Model.dart';
 import 'package:AstrowayCustomer/model/viewStories.dart';
+import 'package:AstrowayCustomer/utils/global.dart' as global;
 import 'package:AstrowayCustomer/utils/services/api_helper.dart';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart' as material;
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
 import '../model/RecommendedPujaListModel.dart';
 import '../model/language.dart';
-import 'package:AstrowayCustomer/utils/global.dart' as global;
 import '../model/rec_model.dart';
 
 class HomeController extends GetxController {

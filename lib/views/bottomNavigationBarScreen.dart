@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, deprecated_member_use
 
+import 'dart:async';
 import 'dart:math';
 
 import 'package:AstrowayCustomer/controllers/bottomNavigationController.dart';
@@ -13,6 +14,7 @@ import 'package:AstrowayCustomer/controllers/reportController.dart';
 import 'package:AstrowayCustomer/controllers/skillController.dart';
 import 'package:AstrowayCustomer/controllers/userProfileController.dart';
 import 'package:AstrowayCustomer/utils/AppColors.dart';
+import 'package:AstrowayCustomer/views/call/agoraCall/agoraIncomingCallScreen.dart';
 import 'package:AstrowayCustomer/views/callScreen.dart';
 import 'package:AstrowayCustomer/views/chat/ChatRejoinBanner.dart';
 import 'package:AstrowayCustomer/views/chatScreen.dart';
@@ -79,7 +81,6 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   final dailyHoroscopeController = Get.find<DailyHoroscopeController>();
   final userProfileController = Get.find<UserProfileController>();
   // final homescreenbottomController = Get.find<HomeScreenBottomController>();
-  late Widget homeScreen;
 
   @override
   void initState() {
@@ -87,7 +88,38 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
     bottomNavigationController.persistentTabController =
         PersistentTabController(initialIndex: widget.index);
     _loadData();
-    homeScreen = getHomeScreen(); // Store HomeScreen only once
+    // startIncomingCallListener();
+    // Do not cache HomeScreen here so it rebuilds when controller data changes
+  }
+
+  Timer? incomingCallTimer;
+
+  void startIncomingCallListener() {
+    const receiverId = 2; // STATIC FOR TESTING
+
+    incomingCallTimer = Timer.periodic(
+      const Duration(seconds: 2),
+      (timer) async {
+        final data = await global.apiHelper.checkIncomingCall(receiverId);
+
+        print("📞 Incoming Call Check => $data");
+
+        if (data['hasCall'] == true) {
+          timer.cancel();
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => Agoraincomingcallscreen(
+                callId: data['call_id'],
+                token: data['token'],
+                channel: data['channel'],
+              ),
+            ),
+          );
+        }
+      },
+    );
   }
 
   void _loadData() async {
@@ -98,7 +130,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
 
   List<Widget> screens() {
     return [
-      homeScreen,
+      getHomeScreen(),
       // HomeScreenBottom(),
       ChatScreen(flag: 0),
       LiveAstrologerListScreen(isFromBottom: true),

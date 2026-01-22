@@ -1,14 +1,16 @@
 import 'dart:math';
+
 import 'package:AstrowayCustomer/controllers/bottomNavigationController.dart';
 import 'package:AstrowayCustomer/controllers/homeController.dart';
 import 'package:AstrowayCustomer/controllers/reviewController.dart';
+import 'package:AstrowayCustomer/utils/global.dart' as global;
 import 'package:AstrowayCustomer/views/astrologerProfile/astrologerProfile.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:story_view/story_view.dart';
-import 'package:AstrowayCustomer/utils/global.dart' as global;
+
 import '../../utils/images.dart';
 
 // ignore: must_be_immutable

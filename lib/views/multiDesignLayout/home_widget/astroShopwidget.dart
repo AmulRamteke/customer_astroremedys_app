@@ -1,11 +1,11 @@
 import 'package:AstrowayCustomer/controllers/astromallController.dart';
+import 'package:AstrowayCustomer/utils/global.dart' as global;
 import 'package:AstrowayCustomer/views/astromall/astroProductScreen.dart';
 import 'package:AstrowayCustomer/views/astromall/astromallScreen.dart';
 import 'package:AstrowayCustomer/widget/commonCachedNetworkImage.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:AstrowayCustomer/utils/global.dart' as global;
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class AstroShopWidget extends StatelessWidget {

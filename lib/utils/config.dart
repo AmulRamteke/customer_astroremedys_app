@@ -4,11 +4,11 @@ String ISCHATAVILABLE = "ISCHATAVILABLE";
 String privacyUrl = "https://astro.diploy.in/privacy-and-policy";
 String termsconditionUrl = "https://astro.diploy.in/terms-and-condition";
 String refundpolicy = 'https://astro.diploy.in/refundPolicy';
-String baseUrl = "https://astroremedys.com";
+String baseUrl = "https://astroremedys.com/api";
 String websiteUrl = "https://astro.diploy.in/";
 String webBaseUrl = "https://astro.diploy.in/api/";
 String imgBaseurl = "https://astro.diploy.in/";
-
+String agoraAppID = "e4ad4becd2f24edc9afcaf9062916025";
 String appMode = "LIVE";
 Map<String, dynamic> appParameters = {
   "LIVE": {

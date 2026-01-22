@@ -79,7 +79,7 @@ class AstrologyVideo {
         coverImage: json["coverImage"] ?? "",
         videoTitle: json["videoTitle"] ?? "",
         createdAt: json["created_at"] ?? "",
-    description: json["description"] ?? "",
+        description: json["description"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -193,7 +193,7 @@ class Blog {
         description: json["description"] ?? "",
         author: json["author"] ?? "",
         blogImage: json["blogImage"] ?? "",
-        viewer: json["viewer"] ?? 0,
+        viewer: int.tryParse(json["viewer"].toString()) ?? 0,
         createdAt: json["created_at"],
         extension: json["extension"],
         previewImage: json["previewImage"],

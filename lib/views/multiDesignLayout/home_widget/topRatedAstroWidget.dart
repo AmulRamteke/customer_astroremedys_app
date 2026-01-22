@@ -359,7 +359,7 @@ class TopRatedAstrologersWidget extends StatelessWidget {
                                             SizedBox(width: 2.w),
                                             Container(
                                               padding: EdgeInsets.symmetric(
-                                                  horizontal: 3.w,
+                                                  horizontal: 2.w,
                                                   vertical: 1.w),
                                               decoration: BoxDecoration(
                                                   borderRadius:

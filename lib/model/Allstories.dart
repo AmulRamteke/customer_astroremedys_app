@@ -2,8 +2,6 @@
 //
 //     final allStories = allStoriesFromJson(jsonString);
 
-
-
 class AllStories {
   int? astrologerId;
   String? name;
@@ -39,20 +37,22 @@ class AllStories {
       );
 
   factory AllStories.fromJson(Map<String, dynamic> json) => AllStories(
-    astrologerId: json["astrologerId"],
-    name: json["name"],
-    profileImage: json["profileImage"],
-    storyCount: json["story_count"],
-    latestStoryDate: json["latest_story_date"] == null ? null : DateTime.parse(json["latest_story_date"]),
-    allStoriesViewed: json["allStoriesViewed"],
-  );
+        astrologerId: json["astrologerId"],
+        name: json["name"],
+        profileImage: json["profileImage"],
+        storyCount: json["story_count"],
+        latestStoryDate: json["latest_story_date"] == null
+            ? null
+            : DateTime.parse(json["latest_story_date"]),
+        allStoriesViewed: json["allStoriesViewed"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "astrologerId": astrologerId,
-    "name": name,
-    "profileImage": profileImage,
-    "story_count": storyCount,
-    "latest_story_date": latestStoryDate?.toIso8601String(),
-    "allStoriesViewed": allStoriesViewed,
-  };
+        "astrologerId": astrologerId,
+        "name": name,
+        "profileImage": profileImage,
+        "story_count": storyCount,
+        "latest_story_date": latestStoryDate?.toIso8601String(),
+        "allStoriesViewed": allStoriesViewed,
+      };
 }

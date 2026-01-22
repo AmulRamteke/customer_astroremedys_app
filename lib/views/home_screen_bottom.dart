@@ -20,141 +20,223 @@ class _HomeScreenBottomState extends State<HomeScreenBottom> {
 
     return Scaffold(
       backgroundColor: Colors.pink[50],
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Top Circular Icons Section
-            Container(
-              padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildTopMenu(
-                    "assets/images/daily_horoscope.png",
-                    "Daily\nHoroscope",
-                    screenWidth,
-                  ),
-                  _buildTopMenu(
-                      "assets/images/kundali.png", "Kundli", screenWidth),
-                  _buildTopMenu(
-                    "assets/images/match_ring.png",
-                    "Match\nMatching",
-                    screenWidth,
-                  ),
-                  _buildTopMenu(
-                    "assets/images/read.png",
-                    "Astrology\nBlog",
-                    screenWidth,
-                  ),
-                ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Top Circular Icons Section
+              Container(
+                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildTopMenu(
+                      "assets/images/daily_horoscope.png",
+                      "Daily\nHoroscope",
+                      screenWidth,
+                    ),
+                    _buildTopMenu(
+                        "assets/images/kundali.png", "Kundli", screenWidth),
+                    _buildTopMenu(
+                      "assets/images/match_ring.png",
+                      "Match\nMatching",
+                      screenWidth,
+                    ),
+                    _buildTopMenu(
+                      "assets/images/read.png",
+                      "Astrology\nBlog",
+                      screenWidth,
+                    ),
+                  ],
+                ),
               ),
-            ),
 
-            // Promo Banner - Responsive Height
-            _buildPromoBanner(themeYellow, screenWidth, screenHeight),
+              // Promo Banner - Responsive Height
+              _buildPromoBanner(themeYellow, screenWidth, screenHeight),
 
-            // Section Header
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.04,
-                vertical: 8,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "CHAT/CALL WITH ASTROLOGER",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: screenWidth * 0.040,
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: themeYellow,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: const Text(
-                      "View All",
+              // Section Header
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.04,
+                  vertical: 8,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "CHAT/CALL WITH ASTROLOGER",
                       style: TextStyle(
-                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        fontSize: screenWidth * 0.040,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: themeYellow,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const Text(
+                        "View All",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Horizontal Astrologer Cards - Responsive sizing
+              SizedBox(
+                height: screenHeight * 0.28, // Dynamic height based on screen
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                  children: [
+                    _buildAstroCard(
+                      "D K",
+                      "16 Years",
+                      "₹60/Min.",
+                      "https://i.pravatar.cc/150?u=dk",
+                      screenWidth,
+                      themeYellow,
+                    ),
+                    _buildAstroCard(
+                      "Dolly",
+                      "3 Years",
+                      "₹27/Min.",
+                      "https://i.pravatar.cc/150?u=dolly",
+                      screenWidth,
+                      themeYellow,
+                    ),
+                    _buildAstroCard(
+                      "Sagar",
+                      "5 Years",
+                      "₹40/Min.",
+                      "https://i.pravatar.cc/150?u=sagar",
+                      screenWidth,
+                      themeYellow,
+                    ),
+                    _buildAstroCard(
+                      "Sagar",
+                      "5 Years",
+                      "₹40/Min.",
+                      "https://i.pravatar.cc/150?u=sagar",
+                      screenWidth,
+                      themeYellow,
+                    ),
+                    _buildAstroCard(
+                      "Sagar",
+                      "5 Years",
+                      "₹40/Min.",
+                      "https://i.pravatar.cc/150?u=sagar",
+                      screenWidth,
+                      themeYellow,
+                    ),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: screenHeight * 0.02),
+
+              // Bottom Grid Buttons
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: _buildSmallGridItem(
+                        "assets/images/swastika.png",
+                        themeYellow,
+                        screenHeight,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: _buildSmallGridItem(
+                        "assets/images/sky.png",
+                        themeYellow,
+                        screenHeight,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: _buildSmallGridItem(
+                        "assets/images/add_to_cart.png",
+                        themeYellow,
+                        screenHeight,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.03),
+
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                padding: EdgeInsets.all(screenWidth * 0.05),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: themeYellow, // Ya jo bhi aapka banner color hai
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "India's Best\nAstrology App With",
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.045,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
+                    Text(
+                      "Vastu Experience",
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.035,
+                        color: Colors.brown,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(
+                        height:
+                            20), // Spacer() ki jagah yahan fixed gap behtar hai
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
+                        shape: const StadiumBorder(),
+                        elevation: 0,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.025,
+                          vertical: 10,
+                        ),
+                      ),
+                      child: Text(
+                        "Connect with Expert Astrologer",
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.025,
+                          height: 1.1,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-
-            // Horizontal Astrologer Cards - Responsive sizing
-            SizedBox(
-              height: screenHeight * 0.28, // Dynamic height based on screen
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-                children: [
-                  _buildAstroCard(
-                    "D K",
-                    "16 Years",
-                    "₹60/Min.",
-                    "https://i.pravatar.cc/150?u=dk",
-                    screenWidth,
-                    themeYellow,
-                  ),
-                  _buildAstroCard(
-                    "Dolly",
-                    "3 Years",
-                    "₹27/Min.",
-                    "https://i.pravatar.cc/150?u=dolly",
-                    screenWidth,
-                    themeYellow,
-                  ),
-                  _buildAstroCard(
-                    "Sagar",
-                    "5 Years",
-                    "₹40/Min.",
-                    "https://i.pravatar.cc/150?u=sagar",
-                    screenWidth,
-                    themeYellow,
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: screenHeight * 0.02),
-
-            // Bottom Grid Buttons
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-              child: Row(
-                children: [
-                  _buildSmallGridItem(
-                    "assets/images/swastika.png",
-                    themeYellow,
-                    screenHeight,
-                  ),
-                  const SizedBox(width: 10),
-                  _buildSmallGridItem(
-                    "assets/images/sky.png",
-                    themeYellow,
-                    screenHeight,
-                  ),
-                  const SizedBox(width: 10),
-                  _buildSmallGridItem(
-                    "assets/images/add_to_cart.png",
-                    themeYellow,
-                    screenHeight,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: screenHeight * 0.03),
-          ],
+              SizedBox(height: screenHeight * 0.03),
+            ],
+          ),
         ),
       ),
     );
@@ -363,20 +445,19 @@ class _HomeScreenBottomState extends State<HomeScreenBottom> {
   }
 
   Widget _buildSmallGridItem(String imagePath, Color color, double sh) {
-    return Expanded(
-      child: Container(
-        height: sh * 0.08, // 8% of screen height
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Center(
-          child: Image.asset(
-            imagePath,
-            height: sh * 0.55,
-            width: sh * 0.055,
-            fit: BoxFit.contain,
-          ),
+    return Container(
+      width: double.infinity,
+      height: sh * 0.08,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Center(
+        child: Image.asset(
+          imagePath,
+          height: sh * 0.055,
+          width: sh * 0.055,
+          fit: BoxFit.contain,
         ),
       ),
     );

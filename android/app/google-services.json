@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "911263916570",
-    "project_id": "customer-astroremedys",
-    "storage_bucket": "customer-astroremedys.firebasestorage.app"
+    "project_number": "788123640458",
+    "project_id": "astroremedystest",
+    "storage_bucket": "astroremedystest.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:911263916570:android:c1cda3797d1ad1d62727a3",
+        "mobilesdk_app_id": "1:788123640458:android:be140658154bb8f469c373",
         "android_client_info": {
           "package_name": "com.astroremedys.customer"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "788123640458-c85m62mosgmafimlghqh84ae6vmd9ma3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCJvthRO-7SU9enYCFu21hJ9_hfZwJVesA"
+          "current_key": "AIzaSyBcDLpzWZUWL09UKi603zG3A7iXcU5ocCc"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "788123640458-c85m62mosgmafimlghqh84ae6vmd9ma3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

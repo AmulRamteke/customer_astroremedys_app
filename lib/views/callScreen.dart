@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, deprecated_member_use
 
 import 'dart:developer';
+
 import 'package:AstrowayCustomer/controllers/bottomNavigationController.dart';
 import 'package:AstrowayCustomer/controllers/callController.dart';
 import 'package:AstrowayCustomer/controllers/chatController.dart';
@@ -9,13 +10,14 @@ import 'package:AstrowayCustomer/controllers/languageController.dart';
 import 'package:AstrowayCustomer/controllers/reportController.dart';
 import 'package:AstrowayCustomer/controllers/skillController.dart';
 import 'package:AstrowayCustomer/utils/AppColors.dart';
+import 'package:AstrowayCustomer/utils/global.dart' as global;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:AstrowayCustomer/utils/global.dart' as global;
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
 import 'multiDesignLayout/callscreen/astrologerCallScreenListing.dart';
 
 class CallScreen extends StatefulWidget {

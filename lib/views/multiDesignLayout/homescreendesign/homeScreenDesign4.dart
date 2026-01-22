@@ -29,6 +29,7 @@ import 'package:AstrowayCustomer/views/kundliMatching/kundliMatchingScreen.dart'
 import 'package:AstrowayCustomer/views/multiDesignLayout/home_widget/astroShopwidget.dart';
 import 'package:AstrowayCustomer/views/multiDesignLayout/home_widget/astroinNewswidget.dart';
 import 'package:AstrowayCustomer/views/multiDesignLayout/home_widget/astrologyCategoriesWidget.dart';
+import 'package:AstrowayCustomer/views/multiDesignLayout/home_widget/behindtheScene.dart';
 import 'package:AstrowayCustomer/views/multiDesignLayout/home_widget/bottomInfoCard.dart';
 import 'package:AstrowayCustomer/views/multiDesignLayout/home_widget/devotionalBlogWidget.dart';
 import 'package:AstrowayCustomer/views/multiDesignLayout/home_widget/panchangOverviewWidget.dart';
@@ -1545,6 +1546,7 @@ class _HomeScreenDesign4State extends State<HomeScreenDesign4> {
                                 : SizedBox(),
                       ),
                       //---------- TOP RATED ASTROLOGERS-----------------------
+
                       TopRatedAstrologersWidget(
                           bottomNavigationController:
                               bottomNavigationController),
@@ -1569,11 +1571,11 @@ class _HomeScreenDesign4State extends State<HomeScreenDesign4> {
                       //---------- Devotional Blog-------------------
                       DevotionalBlogWidget(),
                       //-------------BEHIND THE SCHENE-------------------
-                      // global.getSystemFlagValueForLogin(
-                      //             global.systemFlagNameList.behindScenes) ==
-                      //         ""
-                      //     ? SizedBox.shrink()
-                      //     : BehindTheSceneWidget(),
+                      global.getSystemFlagValueForLogin(
+                                  global.systemFlagNameList.behindScenes) ==
+                              ""
+                          ? SizedBox.shrink()
+                          : BehindTheSceneWidget(),
 
                       //------------Astro in news--------------------
                       AstroInNewsWidget(),

@@ -7,7 +7,6 @@ import 'package:AstrowayCustomer/controllers/search_controller.dart';
 import 'package:AstrowayCustomer/utils/config.dart';
 import 'package:AstrowayCustomer/utils/couponcode.dart';
 import 'package:AstrowayCustomer/views/bottomNavigationBarScreen.dart';
-import 'package:AstrowayCustomer/views/verifyPhoneScreen.dart';
 import 'package:AstrowayCustomer/widget/CanvasStyle/rotatingTagline.dart';
 import 'package:AstrowayCustomer/widget/socialloginwidget.dart';
 import 'package:AstrowayCustomer/widget/textFieldWidget.dart';
@@ -15,7 +14,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -91,6 +89,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       fit: BoxFit.cover, height: Get.height * 0.14),
                 ),
                 SizedBox(height: 20),
+                Text(
+                  "Welcome to Astroremedys",
+                  textAlign: TextAlign.center,
+                  style: Get.theme.textTheme.headlineMedium!.copyWith(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
                 SizedBox(height: Get.height * 0.02),
                 Container(
                     width: Get.width,
@@ -272,32 +279,45 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               GestureDetector(
                                 onTap: () async {
-                                  bool isValid = loginController.validedPhone();
-                                  loginController.phonefocus.unfocus();
-                                  loginController.namefocus.unfocus();
-                                  if (isValid) {
-                                    dynamic phoneno =
-                                        loginController.phoneController.text;
-                                    print('phone no is $phoneno');
-                                    if (phoneno.toString() == '9797979797') {
-                                      loginController.timer();
-                                      Get.to(
-                                        () => VerifyPhoneScreen(
-                                          phoneNumber: '9797979797',
-                                        ),
-                                      );
-                                    } else {
-                                      await loginController
-                                          .checkcontactExistOrNot(
-                                              phoneno.toString(),
-                                              context,
-                                              false);
-                                    }
-                                  } else {
-                                    Fluttertoast.showToast(
-                                      msg: "Invalid Mobile Number",
-                                    );
-                                  }
+                                  // bool isValid = loginController.validedPhone();
+                                  // loginController.phonefocus.unfocus();
+                                  // loginController.namefocus.unfocus();
+                                  // if (isValid) {
+                                  //   dynamic phoneno =
+                                  //       loginController.phoneController.text;
+                                  //   print('phone no is $phoneno');
+                                  //   if (phoneno.toString() == '9797979797') {
+                                  //     loginController.timer();
+                                  //     Get.to(
+                                  //       () => VerifyPhoneScreen(
+                                  //         phoneNumber: '9797979797',
+                                  //       ),
+                                  //     );
+                                  //   } else {
+                                  //     await loginController
+                                  //         .checkcontactExistOrNot(
+                                  //             phoneno.toString(),
+                                  //             context,
+                                  //             false);
+                                  //   }
+                                  // } else {
+                                  //   Fluttertoast.showToast(
+                                  //     msg: "Invalid Mobile Number",
+                                  //   );
+                                  // }
+
+                                  Get.find<SearchControllerCustom>()
+                                      .serachTextController
+                                      .clear();
+                                  Get.find<SearchControllerCustom>()
+                                      .searchText = '';
+                                  homeController.myOrders.clear();
+                                  BottomNavigationController
+                                      bottomNavigationController =
+                                      Get.find<BottomNavigationController>();
+                                  bottomNavigationController.setIndex(0, 0);
+                                  Get.off(() =>
+                                      BottomNavigationBarScreen(index: 0));
                                 },
                                 child: Container(
                                   height: 45,
@@ -317,7 +337,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         width: 10,
                                       ),
                                       Text(
-                                        'SEND OTP',
+                                        'Login',
                                         style: TextStyle(color: Colors.white),
                                         textAlign: TextAlign.center,
                                       ).tr(),

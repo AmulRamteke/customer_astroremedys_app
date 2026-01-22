@@ -4,10 +4,10 @@ import 'package:AstrowayCustomer/controllers/walletController.dart';
 import 'package:AstrowayCustomer/model/astrologer_model.dart';
 import 'package:AstrowayCustomer/model/reportModel.dart';
 import 'package:AstrowayCustomer/model/reportTypeModel.dart';
+import 'package:AstrowayCustomer/utils/global.dart' as global;
 import 'package:AstrowayCustomer/utils/services/api_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:AstrowayCustomer/utils/global.dart' as global;
 
 import '../views/bottomNavigationBarScreen.dart';
 
@@ -75,26 +75,79 @@ class ReportController extends GetxController {
   }
 
   List<ReportModel> sorting = [
-    ReportModel(id: 1, name: 'Popularity', isSeledted: true, value: 'popularity'),
-    ReportModel(id: 2, name: 'Experience:High to Low', isSeledted: false, value: 'experienceHighToLow'),
-    ReportModel(id: 3, name: 'Experience: Low to High', isSeledted: false, value: 'experienceLowToHigh'),
-    ReportModel(id: 4, name: 'Oders: High to Low', isSeledted: false, value: 'ordersHighToLow'),
-    ReportModel(id: 5, name: 'Oders: Low to High', isSeledted: false, value: 'ordersLowToHigh'),
-    ReportModel(id: 6, name: 'Price: High to Low', isSeledted: false, value: 'priceHighToLow'),
-    ReportModel(id: 7, name: 'Price: Low to High', isSeledted: false, value: 'priceLowToHigh'),
+    ReportModel(
+        id: 1, name: 'Popularity', isSeledted: true, value: 'popularity'),
+    ReportModel(
+        id: 2,
+        name: 'Experience:High to Low',
+        isSeledted: false,
+        value: 'experienceHighToLow'),
+    ReportModel(
+        id: 3,
+        name: 'Experience: Low to High',
+        isSeledted: false,
+        value: 'experienceLowToHigh'),
+    ReportModel(
+        id: 4,
+        name: 'Oders: High to Low',
+        isSeledted: false,
+        value: 'ordersHighToLow'),
+    ReportModel(
+        id: 5,
+        name: 'Oders: Low to High',
+        isSeledted: false,
+        value: 'ordersLowToHigh'),
+    ReportModel(
+        id: 6,
+        name: 'Price: High to Low',
+        isSeledted: false,
+        value: 'priceHighToLow'),
+    ReportModel(
+        id: 7,
+        name: 'Price: Low to High',
+        isSeledted: false,
+        value: 'priceLowToHigh'),
     // ReportModel(id: 8, name: 'Rating: High to Low', isSeledted: false, value: 'rating'),
   ];
   List<ReportModel> reportSorting = [
-    ReportModel(id: 1, name: 'Popularity', isSeledted: true, value: 'popularity'),
-    ReportModel(id: 2, name: 'Experience:High to Low', isSeledted: false, value: 'experienceHighToLow'),
-    ReportModel(id: 3, name: 'Experience: Low to High', isSeledted: false, value: 'experienceLowToHigh'),
-    ReportModel(id: 4, name: 'Oders: High to Low', isSeledted: false, value: 'ordersHighToLow'),
-    ReportModel(id: 5, name: 'Oders: Low to High', isSeledted: false, value: 'ordersLowToHigh'),
-    ReportModel(id: 6, name: 'Price: High to Low', isSeledted: false, value: 'reportPriceHighToLow'),
-    ReportModel(id: 7, name: 'Price: Low to High', isSeledted: false, value: 'reportPriceLowToHigh'),
+    ReportModel(
+        id: 1, name: 'Popularity', isSeledted: true, value: 'popularity'),
+    ReportModel(
+        id: 2,
+        name: 'Experience:High to Low',
+        isSeledted: false,
+        value: 'experienceHighToLow'),
+    ReportModel(
+        id: 3,
+        name: 'Experience: Low to High',
+        isSeledted: false,
+        value: 'experienceLowToHigh'),
+    ReportModel(
+        id: 4,
+        name: 'Oders: High to Low',
+        isSeledted: false,
+        value: 'ordersHighToLow'),
+    ReportModel(
+        id: 5,
+        name: 'Oders: Low to High',
+        isSeledted: false,
+        value: 'ordersLowToHigh'),
+    ReportModel(
+        id: 6,
+        name: 'Price: High to Low',
+        isSeledted: false,
+        value: 'reportPriceHighToLow'),
+    ReportModel(
+        id: 7,
+        name: 'Price: Low to High',
+        isSeledted: false,
+        value: 'reportPriceLowToHigh'),
   ];
 
-  List description = ['Get detailed analysis on your chart through the astrologer predictions to get a sense of how your year 2022 will go overall. this report will cover topics retlated to career,love,health,wealth and realtionship. we\'ll know your future based on your upcoming dashas what will be good and bad to you.', ''];
+  List description = [
+    'Get detailed analysis on your chart through the astrologer predictions to get a sense of how your year 2022 will go overall. this report will cover topics retlated to career,love,health,wealth and realtionship. we\'ll know your future based on your upcoming dashas what will be good and bad to you.',
+    ''
+  ];
 
   @override
   void onInit() {
@@ -104,7 +157,9 @@ class ReportController extends GetxController {
 
   void paginateTask() {
     reportTypeScrollController.addListener(() async {
-      if (reportTypeScrollController.position.pixels == reportTypeScrollController.position.maxScrollExtent && !isAllDataLoaded) {
+      if (reportTypeScrollController.position.pixels ==
+              reportTypeScrollController.position.maxScrollExtent &&
+          !isAllDataLoaded) {
         isMoreDataAvailable = true;
         await getReportTypes(searchString, true);
       }
@@ -155,7 +210,9 @@ class ReportController extends GetxController {
       }
       await global.checkBody().then((result) async {
         if (result) {
-          await apiHelper.getReportType(searchString, startIndex, fetchRecord).then((result) {
+          await apiHelper
+              .getReportType(searchString, startIndex, fetchRecord)
+              .then((result) {
             if (result.status == "200") {
               reportTypeList.addAll(result.recordList);
               print('report type length:- ${reportTypeList.length}');
@@ -244,19 +301,32 @@ class ReportController extends GetxController {
             "userId": global.currentUserId,
             "astrologerId": astrologerId,
             "firstName": fristNameController.text,
-            "lastName": lastNameController.text == "" ? null : lastNameController.text,
+            "lastName":
+                lastNameController.text == "" ? null : lastNameController.text,
             "contactNo": phoneController.text,
             "gender": gender,
-            "birthDate": DateTime.parse(selctedDate.toString()).toIso8601String(),
+            "birthDate":
+                DateTime.parse(selctedDate.toString()).toIso8601String(),
             "birthTime": birthTimeController.text,
             "birthPlace": placeController.text,
             "maritalStatus": dropDownController.maritalStatus ?? "Single",
-            "occupation": ocucupationController.text == "" ? null : ocucupationController.text,
+            "occupation": ocucupationController.text == ""
+                ? null
+                : ocucupationController.text,
             "answerLanguage": dropDownController.language ?? "English",
-            "partnerName": partnerNameController.text == "" ? null : partnerNameController.text,
-            "partnerBirthDate": partnerDobController.text == "" ? null : DateTime.parse(selctedPartnerDate.toString()).toIso8601String(),
-            "partnerBirthTime": partnerBirthController.text == "" ? null : partnerBirthController.text,
-            "partnerBirthPlace": partnerPlaceController.text == "" ? null : partnerPlaceController.text,
+            "partnerName": partnerNameController.text == ""
+                ? null
+                : partnerNameController.text,
+            "partnerBirthDate": partnerDobController.text == ""
+                ? null
+                : DateTime.parse(selctedPartnerDate.toString())
+                    .toIso8601String(),
+            "partnerBirthTime": partnerBirthController.text == ""
+                ? null
+                : partnerBirthController.text,
+            "partnerBirthPlace": partnerPlaceController.text == ""
+                ? null
+                : partnerPlaceController.text,
             "comments": commentController.text,
             "reportType": reportId,
             'countryCode': countryCode ?? "IN"
@@ -266,14 +336,18 @@ class ReportController extends GetxController {
             "userId": global.currentUserId,
             "astrologerId": astrologerId,
             "firstName": fristNameController.text,
-            "lastName": lastNameController.text == "" ? null : lastNameController.text,
+            "lastName":
+                lastNameController.text == "" ? null : lastNameController.text,
             "contactNo": phoneController.text,
             "gender": gender,
-            "birthDate": DateTime.parse(selctedDate.toString()).toIso8601String(),
+            "birthDate":
+                DateTime.parse(selctedDate.toString()).toIso8601String(),
             "birthTime": birthTimeController.text,
             "birthPlace": placeController.text,
             "maritalStatus": dropDownController.maritalStatus ?? "Single",
-            "occupation": ocucupationController.text == "" ? null : ocucupationController.text,
+            "occupation": ocucupationController.text == ""
+                ? null
+                : ocucupationController.text,
             "answerLanguage": dropDownController.language ?? "English",
             "comments": commentController.text,
             "reportType": reportId,
@@ -282,12 +356,13 @@ class ReportController extends GetxController {
     try {
       await global.checkBody().then((result) async {
         if (result) {
-          await apiHelper.addReportIntakeDetail(getReportModelData).then((result) async {
+          await apiHelper
+              .addReportIntakeDetail(getReportModelData)
+              .then((result) async {
             if (result.status == "200") {
               final walletcontroller = Get.find<WalletController>();
               global.splashController.getCurrentUserData();
-              await walletcontroller
-                  .getAmount();
+              await walletcontroller.getAmount();
               print("Report Request send Successfully");
               global.hideLoader();
               Get.back();

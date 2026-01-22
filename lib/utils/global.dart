@@ -99,6 +99,9 @@ bool freeRequestMinimum = false;
 int amountisfreechat = 0;
 int amountisfreecall = 0;
 
+int callerId = 1;
+int receiverId = 2;
+
 Future<String> playstoreUrl() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   String packageName = packageInfo.packageName;
